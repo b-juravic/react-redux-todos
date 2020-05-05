@@ -1,24 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { useSelector } from "react-redux";
+import NewTodoForm from "./NewTodoForm";
+import TodoList from "./TodoList"
+
+/**
+ * Renders NewTodoForm and TodoList.
+ * Utilizes useSelector to access todos from state
+ */
 
 function App() {
+
+  // move to TodoList component
+  const todos = useSelector(todoList => todoList);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NewTodoForm />
+      <TodoList todos={todos}/>
     </div>
   );
 }
