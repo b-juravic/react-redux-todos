@@ -1,33 +1,31 @@
 import React from 'react';
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { REMOVE_TODO } from "./todoReducer";
+import Todo from "./Todo";
 
 /**
- * Renders todos and dispatches to remove a todo from store if clicked
- * Props:
- * -- todos passed down from app component
+ * Renders list of Todos.
+ * Utilizes useSelector to access todos from store.
+ * Utilizes useDispatch to remove a selected todo in store.
  */
 
-function TodoList({ todos }) {
+function TodoList() {
+  const todos = useSelector(todoList => todoList);
   const dispatch = useDispatch();
 
   function removeTodo(evt) {
     dispatch({ type: REMOVE_TODO, payload: evt.target.id })
   }
 
-  const todoList = todos.map(t => (
-    <li
-      key={t.id}
-      id={t.id}
-      todo={t.todo}>
-      {t.todo}
-      <button id={t.id} onClick={removeTodo}>Delete</button>
-    </li>
-  ));
-
-  return (
+  return(
     <ul>
-      {todoList}
+    {todos.map(t => (
+      <Todo
+        key={t.id}
+        id={t.id}
+        todo={t.todo}
+        removeTodo={removeTodo}
+      />))}
     </ul>
   );
 }
